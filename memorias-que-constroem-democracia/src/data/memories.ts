@@ -1,8 +1,0 @@
-import type { Memory } from '../types';
-
-export const memories: Memory[] = [
-  { id: 1, title: 'Monte Mor', cityId: 1, neighborhood: 'Zona rural / área de campo', category: 'Cultura', period: '09 de maio', story: 'Registro editorial do trabalho de campo realizado no Monte Mor, em Acopiara. Esta ficha está preparada para receber a narrativa final, fotografias, entrevistas e documentos produzidos pela equipe.', contributor: 'Equipe do projeto', lat: -6.0936, lng: -39.4543, status: 'Aprovado', demo: true, featured: true },
-  { id: 2, title: 'Trilha dos Caldeirões', cityId: 3, neighborhood: 'Zona rural', category: 'Patrimônio', period: '11 de junho', story: 'Registro editorial da atividade realizada na Trilha dos Caldeirões, em Deputado Irapuan Pinheiro. O sistema está preparado para receber a descrição final, imagens, vídeos e relatos.', contributor: 'Equipe do projeto', lat: -5.9174, lng: -39.2672, status: 'Aprovado', demo: true, featured: true },
-  { id: 3, title: 'Memória do Centro', cityId: 2, neighborhood: 'Centro', category: 'Memória', period: 'Registro inicial', story: 'Ficha inicial para reunir uma memória urbana de Catarina. O conteúdo definitivo deve ser substituído pelos registros documentados nas entrevistas e oficinas.', contributor: 'Equipe do projeto', lat: -6.1350, lng: -39.8762, status: 'Aprovado', demo: true },
-  { id: 4, title: 'Paisagens de Piquet Carneiro', cityId: 4, neighborhood: 'Centro', category: 'Fotografia', period: 'Registro inicial', story: 'Ficha inicial para uma coleção fotográfica de Piquet Carneiro. Use o formulário do Atlas para acrescentar registros documentais da comunidade.', contributor: 'Equipe do projeto', lat: -5.80025, lng: -39.41702, status: 'Aprovado', demo: true }
-];

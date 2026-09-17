@@ -1,8 +1,0 @@
-import type { City } from '../types';
-
-export const cities: City[] = [
-  { id: 1, name: 'Acopiara', ibgeCode: '2300309', description: 'Parte do recorte territorial do Atlas, com registros urbanos, rurais e de trabalho de campo.', center: [-6.0936, -39.4543], zoom: 13, color: '#FE5300', neighborhoods: ['Centro','Vila Esperança','Nova Acopiara','São Francisco','Moreiras','Vila Palmeira','Vila São João','Quincoé','Santa Felícia','Santo Antônio','São Paulinho','Trussu','Isidoro','Ebron','Barra do Ingá','Solidão'], localities: ['Trussu','Quincoé','Santa Felícia','Isidoro','Ebron'] },
-  { id: 2, name: 'Catarina', ibgeCode: '2303600', description: 'Município dos Inhamuns integrado ao recorte inicial da pesquisa participativa.', center: [-6.1350, -39.8762], zoom: 13, color: '#8E1B75', neighborhoods: ['Centro','Vila Macário','Vila Nova','Vila Balanças','Lagoinha','Vila Holanda'], localities: ['São Gonçalo'] },
-  { id: 3, name: 'Deputado Irapuan Pinheiro', ibgeCode: '2304269', description: 'Território onde a pesquisa articula memória, patrimônio, cartografia social e campo.', center: [-5.9174, -39.2672], zoom: 13, color: '#267082', neighborhoods: ['Centro','Aurora','Maratoã','Monte Sinai','Velame'], localities: ['Baixio','Betânia','Velame'] },
-  { id: 4, name: 'Piquet Carneiro', ibgeCode: '2310902', description: 'Município integrado ao Atlas com bairros e localidades cadastrados como pontos de partida.', center: [-5.80025, -39.41702], zoom: 13, color: '#71863A', neighborhoods: ['Alto Alegre','Piquezinho','Rancho Verde','Centro','Cidade Nova','Bumerangue','Alto dos Maias','João Paulo II','Alto do Bem-ti-vi','Cruzeiro','Santa Luzia'], localities: ['Ibicuã','Mulungu','Catolé da Pista','Baixio'] }
-];
