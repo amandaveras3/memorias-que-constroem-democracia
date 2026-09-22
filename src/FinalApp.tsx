@@ -5,6 +5,7 @@ import {
   type FormEvent,
   type ReactNode,
 } from "react";
+import { createPortal } from "react-dom";
 import {
   ArrowRight,
   Archive,
@@ -3765,25 +3766,59 @@ function Modal({
 }) {
   useEffect(() => {
     const previousOverflow = document.body.style.overflow;
+    const previousPaddingRight = document.body.style.paddingRight;
+    const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
+
+    // O fundo da página fica realmente bloqueado enquanto o card estiver aberto.
     document.body.style.overflow = "hidden";
+    if (scrollbarWidth > 0) {
+      document.body.style.paddingRight = `${scrollbarWidth}px`;
+    }
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        event.preventDefault();
+        close();
+      }
+    };
+
+    document.addEventListener("keydown", handleKeyDown);
     const timer = window.setTimeout(() => {
       document.querySelector<HTMLElement>(".final-modal")?.focus({ preventScroll: true });
     }, 0);
+
     return () => {
       window.clearTimeout(timer);
+      document.removeEventListener("keydown", handleKeyDown);
       document.body.style.overflow = previousOverflow;
+      document.body.style.paddingRight = previousPaddingRight;
     };
-  }, []);
+  }, [close]);
 
-  return (
+  // Portal: o modal sai de qualquer container/stacking context da página e fica
+  // acima da navbar, do mapa e de qualquer elemento com overflow/z-index.
+  return createPortal(
     <div className="final-modal-backdrop" onMouseDown={close}>
-      <section className="final-modal" tabIndex={-1} role="dialog" aria-modal="true" onMouseDown={(e) => e.stopPropagation()}>
-        <button className="modal-close" onClick={close}>
+      <section
+        className="final-modal"
+        tabIndex={-1}
+        role="dialog"
+        aria-modal="true"
+        onMouseDown={(e) => e.stopPropagation()}
+      >
+        <button
+          className="modal-close"
+          type="button"
+          onClick={close}
+          aria-label="Fechar janela"
+          title="Fechar"
+        >
           <X />
         </button>
         {children}
       </section>
-    </div>
+    </div>,
+    document.body,
   );
 }
 function AtlasNotice({
