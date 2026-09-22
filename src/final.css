@@ -4325,8 +4325,7 @@ textarea:focus-visible {
 }
 
 /* A imagem de território permanece visível no modo claro e no escuro. */
-.atlas-final + .route-transition {
-} /* mantém seletor estável sem depender da ordem */
+/* mantém seletor estável sem depender da ordem */
 .final-hero {
   background-image:
     linear-gradient(110deg, rgba(3, 29, 38, 0.7), rgba(109, 29, 101, 0.46)),
