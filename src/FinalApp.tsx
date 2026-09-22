@@ -45,6 +45,7 @@ import {
 import InteractiveAtlasMap, {
   type AtlasPoint,
   type MapDraft,
+  type MapSearchTarget,
 } from "./map/InteractiveAtlasMap";
 import acopiaraImage from "./assets/municipios/acopiara.jpeg";
 import catarinaImage from "./assets/municipios/catarina.jpeg";
@@ -2923,6 +2924,9 @@ function Atlas() {
   const [loading, setLoading] = useState(supabaseConfigured);
   const [dbMessage, setDbMessage] = useState("");
   const [isAdmin, setIsAdmin] = useState(false);
+  const [mapSearchTarget, setMapSearchTarget] = useState<MapSearchTarget | null>(null);
+  const [locationSearchActive, setLocationSearchActive] = useState(false);
+  const [locationSearching, setLocationSearching] = useState(false);
 
   const refresh = async () => {
     if (!supabase) return;
@@ -2984,10 +2988,84 @@ function Atlas() {
           (municipality === "Todos" || p.municipality === municipality) &&
           (category === "Todos" || p.category === category) &&
           (recordType === "Todos" || p.recordType === recordType) &&
-          `${p.title} ${p.story}`.toLowerCase().includes(term.toLowerCase()),
+          (locationSearchActive || `${p.title} ${p.story}`.toLowerCase().includes(term.toLowerCase())),
       ),
-    [allPoints, municipality, category, recordType, term],
+    [allPoints, municipality, category, recordType, term, locationSearchActive],
   );
+
+  const focusPoint = (point: AtlasPoint) => {
+    setSelected(point);
+    setMapSearchTarget({
+      latitude: point.latitude,
+      longitude: point.longitude,
+      label: point.title,
+      nonce: Date.now(),
+    });
+  };
+
+  const searchLocation = async (query: string) => {
+    const normalized = query.toLowerCase();
+    const localMatch = allPoints.find((point) =>
+      point.status === "published" &&
+      `${point.title} ${point.municipality} ${point.category} ${point.story}`
+        .toLowerCase()
+        .includes(normalized),
+    );
+
+    if (localMatch) {
+      setLocationSearchActive(false);
+      focusPoint(localMatch);
+      return;
+    }
+
+    setLocationSearching(true);
+    try {
+      const params = new URLSearchParams({
+        q: `${query}, Ceará, Brasil`,
+        format: "jsonv2",
+        addressdetails: "1",
+        limit: "5",
+        countrycodes: "br",
+        viewbox: "-40.15,-5.45,-38.85,-6.55",
+      });
+      const response = await fetch(`https://nominatim.openstreetmap.org/search?${params.toString()}`, {
+        headers: { "Accept-Language": "pt-BR,pt;q=0.9" },
+      });
+      if (!response.ok) throw new Error("Não foi possível consultar o serviço de localização.");
+      const results = await response.json();
+      if (!Array.isArray(results) || !results.length) {
+        throw new Error(`Não encontramos “${query}” na área pesquisada. Tente incluir o município ou uma localidade próxima.`);
+      }
+      const result = results[0];
+      const latitude = Number(result.lat);
+      const longitude = Number(result.lon);
+      if (!Number.isFinite(latitude) || !Number.isFinite(longitude)) throw new Error("A localização retornada não possui coordenadas válidas.");
+      setLocationSearchActive(true);
+      setSelected(null);
+      setMapSearchTarget({ latitude, longitude, label: result.display_name || query, nonce: Date.now() });
+    } catch (error) {
+      console.error("Erro na busca de localização:", error);
+      const detail = error instanceof Error ? error.message : String(error);
+      projectAlert(detail, "error", "Local não encontrado");
+    } finally {
+      setLocationSearching(false);
+    }
+  };
+
+  const handleLocationSearch = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const query = term.trim();
+    if (!query) return;
+    await searchLocation(query);
+  };
+
+  useEffect(() => {
+    if (loading || !term.trim()) return;
+    const pending = localStorage.getItem("atlas-global-search");
+    if (!pending || pending.trim() !== term.trim()) return;
+    localStorage.removeItem("atlas-global-search");
+    void searchLocation(pending.trim());
+  }, [loading]);
 
   const addPoint = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -3242,14 +3320,26 @@ function Atlas() {
       </section>
       <section className="atlas-layout">
         <aside className="filter-panel">
-          <label className="filter-search">
+          <form className="filter-search" onSubmit={handleLocationSearch}>
             <Search />
             <input
               value={term}
-              onChange={(e) => setTerm(e.target.value)}
-              placeholder="Buscar lugares e memórias"
+              onChange={(e) => {
+                setTerm(e.target.value);
+                setLocationSearchActive(false);
+              }}
+              placeholder="Buscar lugar ou localidade"
+              aria-label="Buscar lugar ou localidade no Atlas"
             />
-          </label>
+            <button type="submit" disabled={locationSearching || !term.trim()} aria-label="Localizar no mapa" title="Localizar no mapa">
+              {locationSearching ? "…" : <Search />}
+            </button>
+          </form>
+          {locationSearchActive && (
+            <div className="atlas-search-hint">
+              <MapPin /> Localização encontrada no mapa. Você pode continuar explorando os registros.
+            </div>
+          )}
           <Filter
             title="Município"
             value={municipality}
@@ -3271,6 +3361,8 @@ function Atlas() {
           <button
             onClick={() => {
               setTerm("");
+              setLocationSearchActive(false);
+              setMapSearchTarget(null);
               setMunicipality("Todos");
               setCategory("Todos");
               setRecordType("Todos");
@@ -3301,7 +3393,8 @@ function Atlas() {
             selectedId={selected?.id}
             draft={draft}
             onPin={(latitude, longitude) => setDraft({ latitude, longitude })}
-            onSelect={setSelected}
+            searchTarget={mapSearchTarget}
+            onSelect={focusPoint}
           />
         </section>
         <aside className="place-list">
@@ -3312,7 +3405,7 @@ function Atlas() {
           {visible
             .filter((p) => p.status === "published")
             .map((point) => (
-              <button key={point.id} onClick={() => setSelected(point)}>
+              <button key={point.id} onClick={() => focusPoint(point)}>
                 <MapPin />
                 <span>
                   <strong>{point.title}</strong>
@@ -3670,9 +3763,21 @@ function Modal({
   children: ReactNode;
   close: () => void;
 }) {
+  useEffect(() => {
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    const timer = window.setTimeout(() => {
+      document.querySelector<HTMLElement>(".final-modal")?.focus({ preventScroll: true });
+    }, 0);
+    return () => {
+      window.clearTimeout(timer);
+      document.body.style.overflow = previousOverflow;
+    };
+  }, []);
+
   return (
     <div className="final-modal-backdrop" onMouseDown={close}>
-      <section className="final-modal" onMouseDown={(e) => e.stopPropagation()}>
+      <section className="final-modal" tabIndex={-1} role="dialog" aria-modal="true" onMouseDown={(e) => e.stopPropagation()}>
         <button className="modal-close" onClick={close}>
           <X />
         </button>
@@ -4802,6 +4907,16 @@ function Admin() {
   const [publishedCount, setPublishedCount] = useState(0);
   const [editingPoint, setEditingPoint] = useState<AtlasPoint | null>(null);
   const [editingArchive, setEditingArchive] = useState<ArchiveItem | null>(null);
+
+  useEffect(() => {
+    if (!editingPoint && !editingArchive) return;
+    window.scrollTo({ top: 0, behavior: "smooth" });
+    const timer = window.setTimeout(() => {
+      const modal = document.querySelector<HTMLElement>(".final-modal");
+      modal?.focus({ preventScroll: true });
+    }, 40);
+    return () => window.clearTimeout(timer);
+  }, [editingPoint, editingArchive]);
 
   const loadAdmin = async () => {
     if (!supabase || !session) return;

@@ -5139,3 +5139,68 @@ html[data-theme="dark"]
   .admin-edit-actions { flex-direction: column-reverse; }
   .admin-edit-actions button { width: 100%; justify-content: center; }
 }
+
+/* =========================================================
+   BUSCA DE LOCALIZAÇÃO + FOCO AUTOMÁTICO DOS CARDS
+   ========================================================= */
+.atlas-final .filter-search {
+  width: 100%;
+  box-sizing: border-box;
+}
+.atlas-final .filter-search input {
+  flex: 1 1 auto;
+  width: 100%;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: var(--ink);
+  font: inherit;
+}
+.atlas-final .filter-search > button {
+  width: 34px;
+  min-width: 34px;
+  height: 34px;
+  display: grid;
+  place-items: center;
+  border: 0;
+  border-radius: 10px;
+  background: var(--accent, #ffab2d);
+  color: #071d24;
+  cursor: pointer;
+}
+.atlas-final .filter-search > button svg {
+  width: 15px;
+  height: 15px;
+}
+.atlas-final .filter-search > button:disabled {
+  opacity: .55;
+  cursor: not-allowed;
+}
+.atlas-search-hint {
+  display: flex;
+  align-items: flex-start;
+  gap: 7px;
+  margin: 8px 0 4px;
+  padding: 9px 10px;
+  border: 1px solid var(--line);
+  border-radius: 11px;
+  background: var(--surface-2);
+  color: var(--muted);
+  font: 600 9px/1.45 var(--mono);
+}
+.atlas-search-hint svg {
+  flex: 0 0 auto;
+  width: 14px;
+  height: 14px;
+  color: var(--purple);
+}
+.final-modal:focus {
+  outline: 2px solid color-mix(in srgb, var(--purple) 65%, transparent);
+  outline-offset: 2px;
+}
+@media (max-width: 900px) {
+  .atlas-final .filter-search > button {
+    width: 36px;
+    min-width: 36px;
+  }
+}
