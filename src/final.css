@@ -5286,3 +5286,797 @@ html[data-theme="dark"]
   }
 }
 
+/* =========================================================
+   MCD — RESPONSIVIDADE MOBILE FINAL
+   Versão 10
+   ========================================================= */
+
+/* ---------- BASE ---------- */
+
+html,
+body,
+#root {
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+}
+
+html {
+  overflow-x: hidden;
+}
+
+body {
+  margin: 0;
+  overflow-x: hidden;
+  -webkit-text-size-adjust: 100%;
+}
+
+img,
+svg,
+video,
+canvas {
+  max-width: 100%;
+}
+
+button,
+input,
+select,
+textarea {
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+/* Evita que textos grandes estourem os cards */
+h1,
+h2,
+h3,
+h4,
+p,
+span,
+small,
+strong,
+b {
+  overflow-wrap: anywhere;
+}
+
+
+/* =========================================================
+   TABLET — até 900px
+   ========================================================= */
+
+@media (max-width: 900px) {
+
+  .final-shell {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  .atlas-title {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .atlas-title > p {
+    max-width: 100%;
+  }
+
+  .atlas-layout {
+    width: calc(100% - 30px);
+    max-width: calc(100% - 30px);
+    grid-template-columns: 1fr;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .filter-panel {
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+    border-right: 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .real-map {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .leaflet-atlas-map {
+    width: 100%;
+  }
+
+  .place-list {
+    display: none;
+  }
+
+  .metadata-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .admin-record-card {
+    min-width: 0;
+  }
+
+  .admin-record-body {
+    min-width: 0;
+  }
+
+  .admin-record-body h3 {
+    overflow-wrap: anywhere;
+  }
+
+  .collection-grid,
+  .memory-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+}
+
+
+/* =========================================================
+   MOBILE — até 720px
+   ========================================================= */
+
+@media (max-width: 720px) {
+
+  /* ---------- PÁGINA ---------- */
+
+  body {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .final-shell {
+    width: 100%;
+    max-width: 100%;
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+
+  /* ---------- CABEÇALHO ---------- */
+
+  .final-header {
+    width: 100%;
+    height: auto;
+    min-height: 64px;
+    padding:
+      8px
+      max(12px, env(safe-area-inset-right))
+      8px
+      max(12px, env(safe-area-inset-left));
+    box-sizing: border-box;
+
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 8px;
+
+    position: sticky;
+    top: 0;
+    z-index: 5000;
+  }
+
+  .final-brand {
+    min-width: 0;
+    gap: 7px;
+    overflow: hidden;
+  }
+
+  .brand-logo-image {
+    width: 38px;
+    height: 38px;
+    flex: 0 0 38px;
+  }
+
+  .final-brand > span {
+    min-width: 0;
+    max-width: 125px;
+    font-size: 10px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .final-brand small {
+    font-size: 7px;
+  }
+
+  .header-actions {
+    min-width: 0;
+    display: flex !important;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 5px !important;
+  }
+
+  .header-search {
+    width: 125px !important;
+    min-width: 0;
+    height: 38px;
+    flex: 0 1 125px;
+  }
+
+  .header-search input {
+    min-width: 0;
+    width: 100%;
+    font-size: 11px;
+  }
+
+  .theme-toggle,
+  .accessibility-toggle,
+  .mobile-menu,
+  .libras-toggle {
+    width: 38px !important;
+    min-width: 38px;
+    height: 38px !important;
+    flex: 0 0 38px;
+  }
+
+
+  /* ---------- MENU MOBILE ---------- */
+
+  .final-header nav {
+    position: absolute !important;
+    top: 100%;
+    left: 0;
+    right: 0;
+
+    width: 100%;
+    box-sizing: border-box;
+
+    padding:
+      8px
+      max(16px, env(safe-area-inset-right))
+      calc(10px + env(safe-area-inset-bottom))
+      max(16px, env(safe-area-inset-left));
+
+    background: var(--surface);
+    border-bottom: 1px solid var(--line);
+
+    box-shadow: 0 15px 35px rgba(0, 0, 0, .18);
+
+    z-index: 5100;
+  }
+
+  .final-header nav a {
+    display: flex;
+    width: 100%;
+    min-height: 44px;
+    align-items: center;
+    padding: 10px 4px;
+    box-sizing: border-box;
+    font-size: 12px;
+  }
+
+
+  /* ---------- HERO ---------- */
+
+  .final-hero {
+    width: 100%;
+    min-height: auto;
+    box-sizing: border-box;
+    padding: 75px 20px 90px;
+    grid-template-columns: 1fr;
+  }
+
+  .final-hero h1 {
+    font-size: clamp(40px, 12vw, 54px);
+    line-height: .96;
+  }
+
+  .final-hero p:not(.kicker) {
+    font-size: 15px;
+    line-height: 1.55;
+  }
+
+  .final-hero aside {
+    display: none;
+  }
+
+  .action-row {
+    width: 100%;
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .action-row > * {
+    width: 100%;
+  }
+
+
+  /* ---------- TÍTULOS ---------- */
+
+  .page-head {
+    width: 100%;
+    box-sizing: border-box;
+    padding-top: 52px;
+    margin-bottom: 45px;
+  }
+
+  .page-head h1,
+  .admin-page h1 {
+    font-size: clamp(38px, 11vw, 50px);
+  }
+
+  .atlas-title {
+    width: 100%;
+    margin-bottom: 22px;
+  }
+
+  .atlas-title h1 {
+    font-size: clamp(38px, 11vw, 50px);
+  }
+
+  .purpose h2 {
+    font-size: clamp(34px, 10vw, 44px);
+  }
+
+
+  /* ---------- ATLAS ---------- */
+
+  .atlas-final {
+    width: 100%;
+    min-width: 0;
+    padding: 28px 0 55px;
+    overflow-x: hidden;
+  }
+
+  .atlas-layout {
+    width: calc(100% - 24px);
+    max-width: calc(100% - 24px);
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    border-radius: 14px;
+  }
+
+  .filter-panel {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0;
+    padding: 12px;
+    box-sizing: border-box;
+  }
+
+  .filter-panel > label:first-child {
+    grid-column: auto;
+  }
+
+  .filter {
+    padding: 13px 0 10px;
+  }
+
+  .filter select {
+    min-height: 44px;
+  }
+
+  .filter-panel > button {
+    min-height: 44px;
+  }
+
+  .real-map {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .map-caption {
+    min-height: 52px;
+    height: auto;
+    padding: 10px 12px;
+    gap: 8px;
+    flex-wrap: wrap;
+    box-sizing: border-box;
+  }
+
+  .map-caption span {
+    min-width: 0;
+  }
+
+  .leaflet-atlas-map {
+    width: 100%;
+    height: min(62vh, 460px);
+    min-height: 340px;
+  }
+
+  .map-warning {
+    left: 8px;
+    right: 8px;
+    bottom: 42px;
+    max-width: none;
+    font-size: 9px;
+  }
+
+  .map-legend {
+    left: 8px;
+    right: 8px;
+    bottom: 8px;
+    font-size: 8px;
+    gap: 7px;
+  }
+
+  .atlas-search-hint {
+    font-size: 8px;
+  }
+
+
+  /* ---------- CARDS / GRIDS ---------- */
+
+  .final-town-grid,
+  .memory-grid,
+  .collection-grid,
+  .research-final {
+    grid-template-columns: 1fr !important;
+  }
+
+  .final-town-grid article {
+    height: 330px;
+  }
+
+  .title-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 14px;
+  }
+
+  .pathway {
+    grid-template-columns: 1fr;
+    padding: 28px 20px;
+    gap: 22px;
+  }
+
+  .pathway h2 {
+    font-size: 34px;
+  }
+
+
+  /* ---------- FORMULÁRIOS ---------- */
+
+  .field {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .field input,
+  .field select,
+  .field textarea {
+    width: 100%;
+    min-height: 44px;
+    font-size: 16px;
+  }
+
+  .field textarea {
+    min-height: 130px;
+  }
+
+  .coordinates,
+  .admin-edit-coordinates {
+    grid-template-columns: 1fr !important;
+  }
+
+
+  /* ---------- MODAIS ---------- */
+
+  .final-modal-backdrop,
+  .confirm-backdrop,
+  .project-alert-backdrop,
+  .atlas-notice-backdrop {
+    padding:
+      max(10px, env(safe-area-inset-top))
+      max(10px, env(safe-area-inset-right))
+      max(10px, env(safe-area-inset-bottom))
+      max(10px, env(safe-area-inset-left));
+
+    align-items: center;
+  }
+
+  .final-modal {
+    width: 100%;
+    max-width: 100%;
+    max-height: calc(100dvh - 20px);
+    box-sizing: border-box;
+    padding: 24px 18px;
+    border-radius: 16px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .final-modal h2 {
+    font-size: clamp(28px, 8vw, 36px);
+    padding-right: 36px;
+  }
+
+  .modal-close {
+    position: sticky;
+    top: 0;
+    margin-left: auto;
+    z-index: 20;
+  }
+
+  .metadata-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .final-modal .action-row,
+  .admin-edit-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .final-modal .action-row > *,
+  .admin-edit-actions > * {
+    width: 100%;
+    min-height: 44px;
+  }
+
+
+  /* ---------- ACERVO ---------- */
+
+  .collection-grid article,
+  .memory-grid article {
+    padding: 20px;
+    min-width: 0;
+  }
+
+  .attachment-list a {
+    min-width: 0;
+    align-items: flex-start;
+  }
+
+  .attachment-list a span {
+    min-width: 0;
+  }
+
+
+  /* ---------- ADMIN ---------- */
+
+  .admin-page {
+    width: 100%;
+    box-sizing: border-box;
+    padding-top: 45px;
+  }
+
+  .admin-page > header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .admin-stats {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .admin-management-section {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 16px;
+  }
+
+  .admin-section-head {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .admin-record-card {
+    grid-template-columns: 42px minmax(0, 1fr);
+    gap: 11px;
+    padding: 13px;
+  }
+
+  .admin-record-icon {
+    width: 42px;
+    height: 42px;
+  }
+
+  .admin-record-card > .admin-actions,
+  .archive-item-actions {
+    grid-column: 1 / -1;
+    width: 100%;
+    justify-content: stretch;
+  }
+
+  .admin-record-card button,
+  .archive-item-actions button {
+    min-height: 44px;
+  }
+
+}
+
+
+/* =========================================================
+   CELULARES PEQUENOS — até 480px
+   ========================================================= */
+
+@media (max-width: 480px) {
+
+  .final-header {
+    grid-template-columns: minmax(0, 1fr) auto;
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  .final-brand > span {
+    max-width: 92px;
+    font-size: 9px;
+  }
+
+  .brand-logo-image {
+    width: 34px;
+    height: 34px;
+    flex-basis: 34px;
+  }
+
+  .header-actions {
+    gap: 3px !important;
+  }
+
+  .header-search {
+    width: 100px !important;
+    flex-basis: 100px;
+  }
+
+  .header-search input {
+    font-size: 10px;
+  }
+
+  .theme-toggle,
+  .accessibility-toggle,
+  .mobile-menu,
+  .libras-toggle {
+    width: 34px !important;
+    min-width: 34px;
+    height: 34px !important;
+    flex-basis: 34px;
+  }
+
+  .final-hero {
+    padding-left: 17px;
+    padding-right: 17px;
+  }
+
+  .final-hero h1 {
+    font-size: 42px;
+  }
+
+  .final-shell {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+
+  .atlas-layout {
+    width: calc(100% - 16px);
+    max-width: calc(100% - 16px);
+  }
+
+  .atlas-title h1 {
+    font-size: 40px;
+  }
+
+  .leaflet-atlas-map {
+    height: 380px;
+    min-height: 300px;
+  }
+
+  .map-caption {
+    font-size: 8px;
+  }
+
+  .final-modal {
+    max-height: calc(100dvh - 12px);
+    padding: 20px 14px;
+    border-radius: 14px;
+  }
+
+  .final-modal h2 {
+    font-size: 29px;
+  }
+
+  .admin-stats {
+    grid-template-columns: 1fr;
+  }
+
+  .final-footer {
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+  }
+
+}
+
+
+/* =========================================================
+   TELAS MUITO PEQUENAS — até 380px
+   ========================================================= */
+
+@media (max-width: 380px) {
+
+  .final-brand > span {
+    display: none;
+  }
+
+  .header-search {
+    width: 88px !important;
+    flex-basis: 88px;
+  }
+
+  .theme-toggle,
+  .accessibility-toggle,
+  .mobile-menu,
+  .libras-toggle {
+    width: 32px !important;
+    min-width: 32px;
+    height: 32px !important;
+    flex-basis: 32px;
+  }
+
+  .final-header {
+    min-height: 58px;
+  }
+
+  .atlas-layout {
+    width: calc(100% - 10px);
+    max-width: calc(100% - 10px);
+  }
+
+  .leaflet-atlas-map {
+    height: 330px;
+  }
+
+  .final-modal {
+    padding: 18px 12px;
+  }
+
+}
+
+
+/* =========================================================
+   TOUCH — melhora controles para celular
+   ========================================================= */
+
+@media (hover: none) and (pointer: coarse) {
+
+  button,
+  a,
+  input,
+  select,
+  textarea {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .final-header nav a,
+  .place-list > button,
+  .filter-panel > button,
+  .link-button,
+  .cta,
+  .secondary {
+    min-height: 44px;
+  }
+
+  .leaflet-control-zoom a,
+  .leaflet-control-layers-toggle {
+    min-width: 40px !important;
+    min-height: 40px !important;
+  }
+}
+
+
+/* =========================================================
+   SAFE AREA — celulares com notch / barra inferior
+   ========================================================= */
+
+@supports (padding: env(safe-area-inset-bottom)) {
+
+  .final-footer {
+    padding-bottom: calc(
+      45px + env(safe-area-inset-bottom)
+    ) !important;
+  }
+
+  .final-modal {
+    padding-bottom: calc(
+      24px + env(safe-area-inset-bottom)
+    );
+  }
+}
